@@ -1,0 +1,23 @@
+<canvas id="p" width="512" height="512"></canvas>
+<img hidden id="g" src="sprite.png">
+<script>
+	s = 0;
+	c = p.getContext('2d');
+	d = function(x,y,num){
+		c.drawImage(g,num*32,0,32,32,x,y,32,32);
+	} // x=left in canvas, y=top in canvas, num = order of sprite
+	onkeyup = function(e){
+		e = e.keyCode;
+
+		if(e==37) s=4;
+		if(e==38) s=2;
+		if(e==39) s=3;
+		if(e==40) s=1;
+	}
+	g.onload = function(){
+		setInterval(function(){
+			p.width = p.width;
+			d(0,0,s);
+		},16);
+	}
+</script>
