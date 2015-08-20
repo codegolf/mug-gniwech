@@ -1,23 +1,52 @@
-<canvas id="p" width="512" height="512"></canvas>
+<canvas id="p" width="1024" height="512"></canvas>
 <img hidden id="g" src="sprite.png">
 <script>
 	s = 0;
+	xpos = 2;
+	ypos = 14
+	// e=mur, f=porte, n=picd, k=picb, o=picg, j=pich, l=poutreV, m=poutreH g=coin, h=interE, i=interA,
+	m = [
+		"eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
+		"e k                   e        e",
+		"e                     e       oe",
+		"e                              e",
+		"e                   eeeee      e",
+		"e                              e",
+		"e                              e",
+		"e                              e",
+		"e                              e",
+		"e                              e",
+		"e                              e",
+		"e                              e",
+		"e      j                       e",
+		"e   leeee                      e",
+		"en  l        j                fe",
+		"eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
+		];
 	c = p.getContext('2d');
 	d = function(x,y,num){
-		c.drawImage(g,num*32,0,32,32,x,y,32,32);
+		c.drawImage(g,num*32,0,32,32,x*32,y*32,32,32);
 	} // x=left in canvas, y=top in canvas, num = order of sprite
 	onkeyup = function(e){
 		e = e.keyCode;
 
-		if(e==37) s=4;
-		if(e==38) s=2;
-		if(e==39) s=3;
-		if(e==40) s=1;
+		if(e==37) s=4,xpos--; //left
+		if(e==38) s=2,ypos--; //up
+		if(e==39) s=3,xpos++; //right
+		if(e==40) s=1,ypos++; //down
 	}
 	g.onload = function(){
 		setInterval(function(){
 			p.width = p.width;
-			d(0,0,s);
+			for(i=0;i<m.length;++i){
+				for(j=0;j<m[i].length;++j){
+					if(m[i][j] != " "){						
+						temp = m[i][j].charCodeAt(0);
+						d(j,i,temp-96);
+					}
+				}
+			}
+			d(xpos,ypos,s);
 		},16);
 	}
 </script>
