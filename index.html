@@ -29,11 +29,10 @@
 	} // x=left in canvas, y=top in canvas, num = order of sprite
 	onkeyup = function(e){
 		e = e.keyCode;
-
-		if(e==37) s=4,xpos--; //left
-		if(e==38) s=2,ypos--; //up
-		if(e==39) s=3,xpos++; //right
-		if(e==40) s=1,ypos++; //down
+		if(e==37) s=4; //left
+		if(e==38) s=2; //up
+		if(e==39) s=3; //right
+		if(e==40) s=1; //down
 	}
 	g.onload = function(){
 		setInterval(function(){
@@ -46,7 +45,47 @@
 					}
 				}
 			}
+			switch(s){ //pas de victoire encore ( à améliorer bien sûr )
+				case 0:
+					break;
+				case 1:
+					if (m[ypos+1][xpos] == " "){ ypos++; }
+					else if (m[ypos+1][xpos] != "e" && m[ypos+1][xpos] != "l" && m[ypos+1][xpos] != "m"){ 
+						s=0;
+						alert("you lost");
+					} else {
+						s=0;
+					}
+					break;
+				case 2:
+					if (m[ypos-1][xpos] == " "){ ypos--; }
+					else if (m[ypos-1][xpos] != "e" && m[ypos-1][xpos] != "l" && m[ypos-1][xpos] != "m"){ 
+						s=0;
+						alert("you lost");
+					} else {
+						s=0;
+					}
+					break;
+				case 3:
+					if (m[ypos][xpos+1] == " "){ xpos++; }
+					else if (m[ypos][xpos+1] != "e" && m[ypos][xpos+1] != "l" && m[ypos][xpos+1] != "m"){ 
+						s=0;
+						alert("you lost");
+					} else {
+						s=0;
+					}
+					break;
+				case 4:
+					if (m[ypos][xpos-1] == " "){ xpos--; }
+					else if (m[ypos][xpos-1] != "e" && m[ypos][xpos-1] != "l" && m[ypos][xpos-1] != "m"){ 
+						s=0;
+						alert("you lost");
+					} else {
+						s=0;
+					}
+					break;
+			}
 			d(xpos,ypos,s);
-		},16);
+		},100);
 	}
 </script>
