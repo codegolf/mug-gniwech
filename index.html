@@ -4,7 +4,8 @@
 	s = 0;
 	ss = 0;
 	xpos = 2;
-	ypos = 14
+	ypos = 14;
+	lvl = 0;
 	// e=mur, f=porte, n=picd, k=picb, o=picg, j=pich, l=poutreV, m=poutreH g=coin, h=interE, i=interA,
 	m = [
 		"eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
@@ -35,14 +36,42 @@
 		if(e==39 && s==0) s=3, ss=0; //right
 		if(e==40 && s==0) s=1, ss=0; //down
 	}
+
+	a = function(xoffset,yoffset,state){
+		if (m[ypos+yoffset][xpos+xoffset] == " "){ 
+			ypos += yoffset; 
+			xpos += xoffset; 
+		}
+		else if (m[ypos+yoffset][xpos+xoffset] == "f") {
+			s=0;
+			ss = state;
+			ypos += yoffset;
+			xpos += xoffset; 
+			lvl++;
+			alert("you win !");
+		} 
+		else if (m[ypos+yoffset][xpos+xoffset] != "e" 
+				&& m[ypos+yoffset][xpos+xoffset] != "l" 
+				&& m[ypos+yoffset][xpos+xoffset] != "m")
+		{ 
+			s=0;
+			ss = state;
+			ypos += yoffset;
+			xpos += xoffset;
+			alert("you lost");
+		} else {
+			s=0;
+			ss = state;
+		}
+	}
+
 	g.onload = function(){
 		setInterval(function(){
 			p.width = p.width;
 			for(i=0;i<m.length;++i){
 				for(j=0;j<m[i].length;++j){
-					if(m[i][j] != " "){						
-						temp = m[i][j].charCodeAt(0);
-						d(j,i,temp-96);
+					if(m[i][j] != " "){		
+						d(j,i,m[i].charCodeAt(j)-96);
 					}
 				}
 			}
@@ -50,71 +79,34 @@
 				case 0:
 					break;
 				case 1:
-					if (m[ypos+1][xpos] == " "){ ypos++; }
-					else if (m[ypos+1][xpos] == "f") {
-						s=0;
-						ss = 1;
-						alert("you win !");
-					} 
-					else if (m[ypos+1][xpos] != "e" && m[ypos+1][xpos] != "l" && m[ypos+1][xpos] != "m"){ 
-						s=0;
-						ss = 1;
-						alert("you lost");
-					} else {
-						s=0;
-						ss = 1;
-					}
+					a(0,1,1);
 					break;
 				case 2:
-					if (m[ypos-1][xpos] == " "){ ypos--; }
-					else if (m[ypos-1][xpos] == "f") {
-						s=0;
-						ss = 2;
-						alert("you win !");
-					} 
-					else if (m[ypos-1][xpos] != "e" && m[ypos-1][xpos] != "l" && m[ypos-1][xpos] != "m"){ 
-						s=0;
-						ss = 2;
-						alert("you lost");
-					} else {
-						s=0;
-						ss = 2;
-					}
+					a(0,-1,2);
 					break;
 				case 3:
-					if (m[ypos][xpos+1] == " "){ xpos++; }
-					else if (m[ypos][xpos+1] == "f") {
-						s=0;
-						ss = 3;
-						alert("you win !");
-					} 
-					else if (m[ypos][xpos+1] != "e" && m[ypos][xpos+1] != "l" && m[ypos][xpos+1] != "m"){ 
-						s=0;
-						ss = 3;
-						alert("you lost");
-					} else {
-						s=0;
-						ss = 3;
-					}
+					a(1,0,3);
 					break;
 				case 4:
-					if (m[ypos][xpos-1] == " "){ xpos--; }
-					else if (m[ypos][xpos-1] == "f") {
-						s=0;
-						ss = 4;
-						alert("you win !");
-					} 
-					else if (m[ypos][xpos-1] != "e" && m[ypos][xpos-1] != "l" && m[ypos][xpos-1] != "m"){ 
-						s=0;
-						ss = 4;
-						alert("you lost");
-					} else {
-						s=0;
-						ss = 4;
-					}
+					a(-1,0,4);
 					break;
 			}
 			d(xpos,ypos,ss);
-		},100);
+		},50);
 	}
+
+/** 
+	Variables used :
+
+	p 					=> div
+	g    				=> img
+	s 					=> state
+	ss 					=> hero position
+	xpos 				=> position initiale suivant x
+	ypos 				=> position initiale suivant y
+	m 					=> map
+	c 					=> contexte du canvas
+	d 					=> function de draw img
+	lvl 				=> current level state
+**/
 </script>
