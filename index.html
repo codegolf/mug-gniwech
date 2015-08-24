@@ -2,22 +2,23 @@
 <img hidden id="g" src="sprite.png">
 <script>
 	s = 0;
+	ss = 0;
 	xpos = 2;
 	ypos = 14
 	// e=mur, f=porte, n=picd, k=picb, o=picg, j=pich, l=poutreV, m=poutreH g=coin, h=interE, i=interA,
 	m = [
 		"eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
-		"e k                   e        e",
-		"e                     e       oe",
-		"e                              e",
-		"e                   eeeee      e",
-		"e                              e",
-		"e                              e",
-		"e                              e",
-		"e                              e",
-		"e                              e",
-		"e                              e",
-		"e                              e",
+		"e k            e      e        e",
+		"e              e   e  e       oe",
+		"e              e   e           e",
+		"e              e   eeeeee      e",
+		"e              e        e      e",
+		"e              eeeeeee  e      e",
+		"e                       e      e",
+		"e                       e      e",
+		"e                     eee      e",
+		"e               e              e",
+		"e          eeeeee              e",
 		"e      j                       e",
 		"e   leeee                      e",
 		"en  l        j                fe",
@@ -29,10 +30,10 @@
 	} // x=left in canvas, y=top in canvas, num = order of sprite
 	onkeyup = function(e){
 		e = e.keyCode;
-		if(e==37) s=4; //left
-		if(e==38) s=2; //up
-		if(e==39) s=3; //right
-		if(e==40) s=1; //down
+		if(e==37 && s==0) s=4, ss=0; //left
+		if(e==38 && s==0) s=2, ss=0; //up
+		if(e==39 && s==0) s=3, ss=0; //right
+		if(e==40 && s==0) s=1, ss=0; //down
 	}
 	g.onload = function(){
 		setInterval(function(){
@@ -50,42 +51,70 @@
 					break;
 				case 1:
 					if (m[ypos+1][xpos] == " "){ ypos++; }
+					else if (m[ypos+1][xpos] == "f") {
+						s=0;
+						ss = 1;
+						alert("you win !");
+					} 
 					else if (m[ypos+1][xpos] != "e" && m[ypos+1][xpos] != "l" && m[ypos+1][xpos] != "m"){ 
 						s=0;
+						ss = 1;
 						alert("you lost");
 					} else {
 						s=0;
+						ss = 1;
 					}
 					break;
 				case 2:
 					if (m[ypos-1][xpos] == " "){ ypos--; }
+					else if (m[ypos-1][xpos] == "f") {
+						s=0;
+						ss = 2;
+						alert("you win !");
+					} 
 					else if (m[ypos-1][xpos] != "e" && m[ypos-1][xpos] != "l" && m[ypos-1][xpos] != "m"){ 
 						s=0;
+						ss = 2;
 						alert("you lost");
 					} else {
 						s=0;
+						ss = 2;
 					}
 					break;
 				case 3:
 					if (m[ypos][xpos+1] == " "){ xpos++; }
+					else if (m[ypos][xpos+1] == "f") {
+						s=0;
+						ss = 3;
+						alert("you win !");
+					} 
 					else if (m[ypos][xpos+1] != "e" && m[ypos][xpos+1] != "l" && m[ypos][xpos+1] != "m"){ 
 						s=0;
+						ss = 3;
 						alert("you lost");
 					} else {
 						s=0;
+						ss = 3;
 					}
 					break;
 				case 4:
 					if (m[ypos][xpos-1] == " "){ xpos--; }
+					else if (m[ypos][xpos-1] == "f") {
+						s=0;
+						ss = 4;
+						alert("you win !");
+					} 
 					else if (m[ypos][xpos-1] != "e" && m[ypos][xpos-1] != "l" && m[ypos][xpos-1] != "m"){ 
 						s=0;
+						ss = 4;
 						alert("you lost");
 					} else {
 						s=0;
+						ss = 4;
 					}
 					break;
 			}
-			d(xpos,ypos,s);
+			d(xpos,ypos,ss);
 		},100);
 	}
 </script>
