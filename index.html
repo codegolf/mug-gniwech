@@ -3,28 +3,47 @@
 <script>
 	s = 0;
 	ss = 0;
-	xpos = 2;
-	ypos = 14;
+	xinit = [2,9];
+	yinit = [14,9];
+	xpos = xinit[0];
+	ypos = yinit[0];
 	lvl = 0;
 	// e=mur, f=porte, n=picd, k=picb, o=picg, j=pich, l=poutreV, m=poutreH g=coin, h=interE, i=interA,
-	m = [
+	m = [[
 		"eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee",
 		"e k            e      e        e",
 		"e              e   e  e       oe",
 		"e              e   e           e",
 		"e              e   eeeeee      e",
-		"e              e        e      e",
-		"e              eeeeeee  e      e",
-		"e                       e      e",
-		"e                       e      e",
-		"e                     eee      e",
-		"e               e              e",
+		"e          e   e        e      e",
+		"e          e   eeeeeee  e      e",
+		"e          e            e      e",
+		"e          e            e      e",
+		"e          e          eee      e",
+		"e          e    e              e",
 		"e          eeeeee              e",
 		"e      j                       e",
 		"e   leeee                      e",
 		"en  l        j                fe",
 		"eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
-		];
+		],[
+		"                                ",
+		"                                ",
+		"                                ",
+		"                                ",
+		"                                ",
+		"            ee                  ",
+		"                                ",
+		"              e                 ",
+		"                                ",
+		"                               e",
+		"                                ",
+		"                                ",
+		"                                ",
+		"                                ",
+		"                                ",
+		"                                "
+		]];
 	c = p.getContext('2d');
 	d = function(x,y,num){
 		c.drawImage(g,num*32,0,32,32,x*32,y*32,32,32);
@@ -38,26 +57,35 @@
 	}
 
 	a = function(xoffset,yoffset,state){
-		if (m[ypos+yoffset][xpos+xoffset] == " "){ 
+		if (m[lvl][ypos+yoffset] == undefined
+			|| m[lvl][ypos+yoffset][xpos+xoffset] == undefined){
+			s=0;
+			ss = 0;
+			ypos = yinit[lvl];
+			xpos = xinit[lvl];
+			alert("you lost");
+		}
+		else if (m[lvl][ypos+yoffset][xpos+xoffset] == " "){ 
 			ypos += yoffset; 
 			xpos += xoffset; 
 		}
-		else if (m[ypos+yoffset][xpos+xoffset] == "f") {
+		else if (m[lvl][ypos+yoffset][xpos+xoffset] == "f") {
 			s=0;
-			ss = state;
-			ypos += yoffset;
-			xpos += xoffset; 
+			ss = 0;
 			lvl++;
+			ypos = yinit[lvl];
+			xpos = xinit[lvl]; 
 			alert("you win !");
 		} 
-		else if (m[ypos+yoffset][xpos+xoffset] != "e" 
-				&& m[ypos+yoffset][xpos+xoffset] != "l" 
-				&& m[ypos+yoffset][xpos+xoffset] != "m")
+		else if ( m[lvl][ypos+yoffset][xpos+xoffset] != "e" 
+				&& m[lvl][ypos+yoffset][xpos+xoffset] != "l" 
+				&& m[lvl][ypos+yoffset][xpos+xoffset] != "m"
+				)
 		{ 
 			s=0;
-			ss = state;
-			ypos += yoffset;
-			xpos += xoffset;
+			ss = 0;
+			ypos = yinit[lvl];
+			xpos = xinit[lvl]; 
 			alert("you lost");
 		} else {
 			s=0;
@@ -68,10 +96,10 @@
 	g.onload = function(){
 		setInterval(function(){
 			p.width = p.width;
-			for(i=0;i<m.length;++i){
-				for(j=0;j<m[i].length;++j){
-					if(m[i][j] != " "){		
-						d(j,i,m[i].charCodeAt(j)-96);
+			for(i=0;i<m[lvl].length;++i){
+				for(j=0;j<m[lvl][i].length;++j){
+					if(m[lvl][i][j] != " "){		
+						d(j,i,m[lvl][i].charCodeAt(j)-96);
 					}
 				}
 			}
