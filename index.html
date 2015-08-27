@@ -3,6 +3,7 @@
 <script>
 	s = 0;
 	ss = 0;
+	poutres = [];
 	xinit = [2,9];
 	yinit = [14,9];
 	xpos = xinit[0];
@@ -15,16 +16,16 @@
 		"e              e   e  e       oe",
 		"e              e   e           e",
 		"e              e   eeeeee      e",
-		"e          e   e        e      e",
+		"e          e   e    l   e      e",
 		"e          e   eeeeeee  e      e",
 		"e          e            e      e",
-		"e          e            e      e",
+		"e          e      h     e      e",
 		"e          e          eee      e",
 		"e          e    e              e",
 		"e          eeeeee              e",
 		"e      j                       e",
-		"e   leeee                      e",
-		"en  l        j                fe",
+		"e   eeee                       e",
+		"en  e       j                 fe",
 		"eeeeeeeeeeeeeeeeeeeeeeeeeeeeeeee"
 		],[
 		"                                ",
@@ -44,6 +45,15 @@
 		"                                ",
 		"                                "
 		]];
+	for (i=0; i<m.length; ++i){
+		poutres[i] = [];
+		for (j=0; j<m[i].length; ++j){
+			m[i][j] = m[i][j].split("");
+			for(k=0;k<m[i][j].length;k++){
+				if (m[i][j][k] == "l") poutres[i].push({x: k, y: j});
+			}
+		}
+	}
 	c = p.getContext('2d');
 	d = function(x,y,num){
 		c.drawImage(g,num*32,0,32,32,x*32,y*32,32,32);
@@ -76,7 +86,23 @@
 			ypos = yinit[lvl];
 			xpos = xinit[lvl]; 
 			alert("you win !");
-		} 
+		}
+		else if (m[lvl][ypos+yoffset][xpos+xoffset] == "h") {
+			m[lvl][ypos+yoffset][xpos+xoffset] = "i";
+			for(i=0; i<poutres[lvl].length; ++i){
+				m[lvl][poutres[lvl][i].y][poutres[lvl][i].x] = " ";
+			}
+			ypos += yoffset; 
+			xpos += xoffset; 
+		}
+		else if (m[lvl][ypos+yoffset][xpos+xoffset] == "i") {
+			m[lvl][ypos+yoffset][xpos+xoffset] = "h";
+			for(i=0; i<poutres[lvl].length; ++i){
+				m[lvl][poutres[lvl][i].y][poutres[lvl][i].x] = "l";
+			}
+			ypos += yoffset; 
+			xpos += xoffset;
+		}
 		else if ( m[lvl][ypos+yoffset][xpos+xoffset] != "e" 
 				&& m[lvl][ypos+yoffset][xpos+xoffset] != "l" 
 				&& m[lvl][ypos+yoffset][xpos+xoffset] != "m"
@@ -99,7 +125,7 @@
 			for(i=0;i<m[lvl].length;++i){
 				for(j=0;j<m[lvl][i].length;++j){
 					if(m[lvl][i][j] != " "){		
-						d(j,i,m[lvl][i].charCodeAt(j)-96);
+						d(j,i,m[lvl][i][j].charCodeAt(0)-96);
 					}
 				}
 			}
