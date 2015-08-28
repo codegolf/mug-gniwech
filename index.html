@@ -35,7 +35,7 @@
 		"   e              l     fe      ",
 		"                 gl   eeee      ",
 		"                                ",
-		"  e           e                 ",
+		"  e                             ",
 		"  e                        e    ",
 		"  e                       ge    ",
 		"          eeeeeeeee        e    ",
@@ -84,8 +84,7 @@
 			ss = 0;
 			lvl++;
 			ypos = yinit[lvl];
-			xpos = xinit[lvl]; 
-			alert("you win !");
+			xpos = xinit[lvl];
 		}
 		else if (m[lvl][ypos+yoffset][xpos+xoffset] == "h") {
 			m[lvl][ypos+yoffset][xpos+xoffset] = "i";
@@ -129,7 +128,7 @@
 					}
 				}
 			}
-			switch(s){ //pas de victoire encore ( à améliorer bien sûr )
+			switch(s){
 				case 0:
 					break;
 				case 1:
@@ -152,15 +151,19 @@
 /** 
 	Variables used :
 
+ 	a					=> move
 	p 					=> div
 	g    				=> img
 	s 					=> state
 	ss 					=> hero position
-	xpos 				=> position initiale suivant x
-	ypos 				=> position initiale suivant y
+	xinit 				=> position initiale suivant x
+	yinit 				=> position initiale suivant y
+	xpos 				=> position courante suivant x
+	ypos 				=> position courante suivant y
 	m 					=> map
 	c 					=> contexte du canvas
 	d 					=> function de draw img
 	lvl 				=> current level state
+	poutres 			=> ensemble des éléments "poutre" des niveaux
 **/
 </script>
