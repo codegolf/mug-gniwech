@@ -1,5 +1,6 @@
 <div style="perspective: 2000px;"><canvas style="transition: transform 1s ease;" id="p" width="1024" height="512"></canvas></div>
 <img hidden id="g" src="sprite.png">
+<input onclick="soundbox.muted=(soundbox.muted)?0:1; this.value=(soundbox.muted)?'unmute':'muted';" type="button" value="mute">
 <script type="text/javascript" src="./sound.js"></script>
 <script>
 	s = 0;
@@ -34,7 +35,7 @@
 		"                e           e  e",
 		"                            emme",
 		"   e                            ",
-		"                                ",
+		"                             e  ",
 		"                                ",
 		"               e e              ",
 		"              ee ee             ",
@@ -45,7 +46,7 @@
 		"                                ",
 		"                                ",
 		"eee                             ",
-		"efl                           e ",
+		"efl                         eee ",
 		"eee             e               "
 		],[
 		" eee                         eee",
@@ -83,9 +84,7 @@
 		"                                "
 		]];
 	for (i=0; i<m.length; ++i){
-		poutres[i] = [];
-		coins[i] = [];
-		interruptors[i] = [];
+		poutres[i] = coins[i] = interruptors[i] = [];
 		for (j=0; j<m[i].length; ++j){
 			m[i][j] = m[i][j].split("");
 			for(k=0;k<m[i][j].length;k++){
@@ -98,7 +97,7 @@
 	c = p.getContext('2d');
 	d = function(x,y,num){
 		c.drawImage(g,num*32,0,32,32,x*32,y*32,32,32);
-	} // x=left in canvas, y=top in canvas, num = order of sprite
+	}
 	onkeyup = function(e){
 		e = e.keyCode;
 		if(e==37 && s==0) s=4, ss=0; //left
@@ -193,6 +192,7 @@
 			ss = state;
 			playSound(moveSound,false);
 		}
+		//p.style.transform = "rotateY(180deg)";
 	}
 	g.onload = function(){
 		setInterval(function(){
