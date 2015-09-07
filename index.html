@@ -84,7 +84,9 @@
 		"                                "
 		]];
 	for (i=0; i<m.length; ++i){
-		poutres[i] = coins[i] = interruptors[i] = [];
+		poutres[i] = [];
+		coins[i] = [];
+		interruptors[i] = [];
 		for (j=0; j<m[i].length; ++j){
 			m[i][j] = m[i][j].split("");
 			for(k=0;k<m[i][j].length;k++){
