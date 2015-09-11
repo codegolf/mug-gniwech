@@ -1,6 +1,6 @@
 <div style="perspective: 2000px;"><canvas style="transition: transform 1s ease;" id="p" width="1024" height="512"></canvas></div>
 <img hidden id="g" src="sprite.png">
-<input onclick="soundbox.muted=(soundbox.muted)?0:1; this.value=(soundbox.muted)?'unmute':'muted';" type="button" value="mute">
+<input onclick="musicBox.muted=(musicBox.muted)?0:1; this.value=(musicBox.muted)?'unmute':'muted';" type="button" value="mute">
 <script type="text/javascript" src="./sound.js"></script>
 <script>
 	s = 0;
@@ -8,47 +8,36 @@
 	poutres = [];
 	coins = [];
 	interruptors = [];
-	xinit = [16,2,1];
-	yinit = [7,14,2];
-	xpos = xinit[1];
-	ypos = yinit[1];
-	lvl = 1;
+	xinit = [2,1];
+	yinit = [14,2];
+	xpos = xinit[0];
+	ypos = yinit[0];
+	lvl = 0;
 	score = 0;
 	music={songData:[{i:[0,164,152,0,0,170,152,12,0,0,24,16,60,0,0,0,0,0,0,2,46,0,0,32,47,3,121,2],p:[1],c:[{n:[104,,,108,,,111,,113,,,,,,,,116,,,115,,,113,,111],f:[]}]},{i:[0,20,152,0,0,65,152,12,0,0,2,0,60,0,0,0,0,0,0,2,255,0,0,32,47,3,157,2],p:[],c:[]},{i:[2,100,128,0,3,201,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]},{i:[2,69,128,0,3,121,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]},{i:[2,100,128,0,3,201,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]},{i:[2,100,128,0,3,201,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]},{i:[2,100,128,0,3,201,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]},{i:[2,100,128,0,3,201,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]}],rowLen:11025,patternLen:32,endPattern:2};
 	coinSound={songData:[{i:[0,164,152,0,0,170,152,12,0,0,24,16,60,0,0,0,0,0,0,2,46,0,0,32,47,3,121,2],p:[1],c:[{n:[120],f:[]}]},{i:[0,20,152,0,0,65,152,12,0,0,2,0,60,0,0,0,0,0,0,2,255,0,0,32,47,3,157,2],p:[],c:[]},{i:[2,100,128,0,3,201,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]},{i:[2,69,128,0,3,121,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]},{i:[2,100,128,0,3,201,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]},{i:[2,100,128,0,3,201,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]},{i:[2,100,128,0,3,201,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]},{i:[2,100,128,0,3,201,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]}],rowLen:6615,patternLen:6,endPattern:2};
 	win={songData:[{i:[0,255,152,0,0,255,152,12,0,0,24,16,37,0,0,0,0,0,0,2,48,0,0,32,47,3,157,2],p:[1],c:[{n:[106,108,115],f:[]}]},{i:[2,100,128,0,3,201,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]},{i:[2,100,128,0,3,201,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]},{i:[2,100,128,0,3,201,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]},{i:[2,100,128,0,3,201,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]},{i:[2,100,128,0,3,201,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]},{i:[2,100,128,0,3,201,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]},{i:[2,100,128,0,3,201,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]}],rowLen:5513,patternLen:10,endPattern:2};
 	doorSound={songData:[{i:[0,255,152,0,0,255,152,12,0,0,2,0,60,0,0,0,0,0,0,2,255,0,0,32,47,3,157,2],p:[1],c:[{n:[125],f:[]}]},{i:[2,100,128,0,3,201,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]},{i:[2,100,128,0,3,201,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]},{i:[2,100,128,0,3,201,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]},{i:[2,100,128,0,3,201,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]},{i:[2,100,128,0,3,201,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]},{i:[2,100,128,0,3,201,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]},{i:[2,100,128,0,3,201,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]}],rowLen:5513,patternLen:8,endPattern:2};
 	moveSound={songData:[{i:[0,124,152,0,0,119,152,12,0,0,2,0,60,0,0,0,0,0,0,2,255,0,0,32,47,3,157,2],p:[1],c:[{n:[99],f:[]}]},{i:[2,100,128,0,3,201,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]},{i:[2,100,128,0,3,201,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]},{i:[2,100,128,0,3,201,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]},{i:[2,100,128,0,3,201,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]},{i:[2,100,128,0,3,201,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]},{i:[2,100,128,0,3,201,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]},{i:[2,100,128,0,3,201,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]}],rowLen:5513,patternLen:4,endPattern:2};
+	portalSound={songData:[{i:[0,95,152,0,0,116,152,12,0,0,47,17,79,0,0,0,0,0,0,2,255,0,0,32,47,3,157,2],p:[1],c:[{n:[111,114],f:[]}]},{i:[2,100,128,0,3,201,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]},{i:[2,100,128,0,3,201,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]},{i:[2,100,128,0,3,201,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]},{i:[2,100,128,0,3,201,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]},{i:[2,100,128,0,3,201,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]},{i:[2,100,128,0,3,201,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]},{i:[2,100,128,0,3,201,128,0,0,0,5,6,58,0,0,0,195,6,1,2,135,0,0,32,147,6,121,6],p:[],c:[]}],rowLen:5513,patternLen:12,endPattern:2};
 	player = new CPlayer();
-	playSound = function(sound, loop){
+	player.init(music);
+	player.generate();
+	wave = player.createWave();
+	musicBox = document.createElement("audio");
+	musicBox.src = URL.createObjectURL(new Blob([wave], {type: "audio/wav"}));
+	musicBox.loop = true;
+	musicBox.play();
+	playSound = function(sound){
 		player.init(sound);
 		player.generate();
 		wave = player.createWave();
 		soundbox = document.createElement("audio");
 		soundbox.src = URL.createObjectURL(new Blob([wave], {type: "audio/wav"}));
-		soundbox.loop = loop;
 		soundbox.play();
 	};
-	playSound(music,true);
-	// e=mur, f=porte, n=picd, k=picb, o=picg, j=pich, l=poutreV, m=poutreH g=coin, h=interE, i=interA,
+	// e=mur, f=porte, g=coin, h=interE, i=interA, j=pich, k=picb, l=murC, m=portail ,n=picd, o=picg
 	m = [[
-		"                e           e  e",
-		"                            emme",
-		"   e                            ",
-		"                             e  ",
-		"                                ",
-		"               e e              ",
-		"              ee ee             ",
-		"e                           h  e",
-		"              ee ee             ",
-		"               e e              ",
-		"                                ",
-		"                                ",
-		"                                ",
-		"eee                             ",
-		"efl                         eee ",
-		"eee             e               "
-		],[
 		" eee                         eee",
 		" e                             e",
 		"    eee                   eee   ",
@@ -56,7 +45,7 @@
 		"       eee            eee       ",
 		"       e                e       ",
 		"                                ",
-		"                                ",
+		"  m     m                  m    ",
 		"                       h        ",
 		"                                ",
 		"       e                    e   ",
@@ -90,7 +79,7 @@
 		for (j=0; j<m[i].length; ++j){
 			m[i][j] = m[i][j].split("");
 			for(k=0;k<m[i][j].length;k++){
-				if (m[i][j][k] == "l" || m[i][j][k] == "m") poutres[i].push({x: k, y: j, obs: m[i][j][k]});
+				if (m[i][j][k] == "l") poutres[i].push({x: k, y: j});
 				if (m[i][j][k] == "g") coins[i].push({x: k, y: j});
 				if (m[i][j][k] == "h") interruptors[i].push({x: k, y: j});
 			}
@@ -123,7 +112,7 @@
 				m[lvl][interruptors[lvl][i].y][interruptors[lvl][i].x] = "h";
 			}
 			for(i=0; i<poutres[lvl].length; ++i){
-				m[lvl][poutres[lvl][i].y][poutres[lvl][i].x] = poutres[lvl][i].obs;
+				m[lvl][poutres[lvl][i].y][poutres[lvl][i].x] = "l";
 			}
 			ypos = yinit[lvl];
 			xpos = xinit[lvl];
@@ -138,17 +127,18 @@
 			lvl++;
 			ypos = yinit[lvl];
 			xpos = xinit[lvl];
-			playSound(win,false);
+			p.style.transform = null;
+			playSound(win);
 		}
 		else if (m[lvl][ypos+yoffset][xpos+xoffset] == "g") {
 			score++;
-			playSound(coinSound,false);
+			playSound(coinSound);
 			m[lvl][ypos+yoffset][xpos+xoffset] = " ";
 			ypos += yoffset;
 			xpos += xoffset;
 		}
 		else if (m[lvl][ypos+yoffset][xpos+xoffset] == "h") {
-			playSound(doorSound,false);
+			playSound(doorSound);
 			for(i=0; i<poutres[lvl].length; ++i){
 				m[lvl][poutres[lvl][i].y][poutres[lvl][i].x] = " ";
 			}
@@ -159,9 +149,9 @@
 			xpos += xoffset;
 		}
 		else if (m[lvl][ypos+yoffset][xpos+xoffset] == "i") {
-			playSound(doorSound,false);
+			playSound(doorSound);
 			for(i=0; i<poutres[lvl].length; ++i){
-				m[lvl][poutres[lvl][i].y][poutres[lvl][i].x] = poutres[lvl][i].obs;
+				m[lvl][poutres[lvl][i].y][poutres[lvl][i].x] = "l";
 			}
 			for(i=0; i<interruptors[lvl].length; ++i){
 				m[lvl][interruptors[lvl][i].y][interruptors[lvl][i].x] = "h";
@@ -169,9 +159,14 @@
 			ypos += yoffset;
 			xpos += xoffset;
 		}
+		else if (m[lvl][ypos+yoffset][xpos+xoffset] == "m") {
+			p.style.transform = (p.style.transform) ? null:"rotateY(180deg)";
+			playSound(portalSound);
+			ypos += yoffset;
+			xpos += xoffset;
+		}
 		else if (    m[lvl][ypos+yoffset][xpos+xoffset] != "e"
-				  && m[lvl][ypos+yoffset][xpos+xoffset] != "l"
-				  && m[lvl][ypos+yoffset][xpos+xoffset] != "m" )
+				  && m[lvl][ypos+yoffset][xpos+xoffset] != "l" )
 		{
 			s=0;
 			ss = 0;
@@ -185,16 +180,15 @@
 				m[lvl][interruptors[lvl][i].y][interruptors[lvl][i].x] = "h";
 			}
 			for(i=0; i<poutres[lvl].length; ++i){
-				m[lvl][poutres[lvl][i].y][poutres[lvl][i].x] = poutres[lvl][i].obs;
+				m[lvl][poutres[lvl][i].y][poutres[lvl][i].x] = "l";
 			}
 			ypos = yinit[lvl];
 			xpos = xinit[lvl];
 		} else {
 			s=0;
 			ss = state;
-			playSound(moveSound,false);
+			playSound(moveSound);
 		}
-		//p.style.transform = "rotateY(180deg)";
 	}
 	g.onload = function(){
 		setInterval(function(){
